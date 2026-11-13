@@ -160,3 +160,7 @@ FinTrack/
 - Recurring automated transactions
 - Export transactions to PDF and CSV/Excel
 - Advanced multi-year trend analytics
+=======
+# FinTrack
+Personal Finance Management Dashboard built using Flutter Web and Dart.
+>>>>>>> 7f5512f8b548e9bb164f75ebdaefd98b0ca26d1d
