@@ -6,13 +6,18 @@ import 'package:fintrack/providers/transaction_provider.dart';
 
 void main() {
   group('FinTrack Responsive & Widget Tests', () {
-    testWidgets('Renders properly on Mobile viewport with bottom navigation', (tester) async {
+    testWidgets('Renders properly on Mobile viewport with bottom navigation after login', (tester) async {
       tester.view.physicalSize = const Size(390, 844); // iPhone 12/13/14 viewport
       tester.view.devicePixelRatio = 1.0;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
 
       await tester.pumpWidget(const FinTrackApp());
+      await tester.pumpAndSettle();
+
+      // Starts on Login page
+      expect(find.text('Welcome Back'), findsOneWidget);
+      await tester.tap(find.text('Quick Demo Sign-In'));
       await tester.pumpAndSettle();
 
       // Check Mobile NavigationBar exists
@@ -30,6 +35,10 @@ void main() {
       addTearDown(tester.view.resetDevicePixelRatio);
 
       await tester.pumpWidget(const FinTrackApp());
+      await tester.pumpAndSettle();
+
+      // Log in
+      await tester.tap(find.text('Quick Demo Sign-In'));
       await tester.pumpAndSettle();
 
       // Switch to Transactions
@@ -50,26 +59,29 @@ void main() {
   });
 
   group('TransactionProvider Unit Tests', () {
-    test('Calculates balance, income and expense correctly', () {
+    test('Starts with empty transactions and updates balance correctly when item is added', () {
       final provider = TransactionProvider();
       
-      final initialBalance = provider.totalBalance;
-      final initialIncome = provider.totalIncome;
+      expect(provider.transactions.isEmpty, isTrue);
+      expect(provider.totalBalance, 0.0);
+      expect(provider.totalIncome, 0.0);
+      expect(provider.totalExpenses, 0.0);
 
       // Add new income
       provider.addTransaction(
         TransactionItem(
           id: 'test_1',
-          title: 'Bonus',
-          amount: 1000.0,
+          title: 'Consulting Bonus',
+          amount: 1500.0,
           type: TransactionType.income,
-          category: TransactionCategory.salary,
+          category: TransactionCategory.freelance,
           date: DateTime.now(),
         ),
       );
 
-      expect(provider.totalIncome, initialIncome + 1000.0);
-      expect(provider.totalBalance, initialBalance + 1000.0);
+      expect(provider.totalIncome, 1500.0);
+      expect(provider.totalBalance, 1500.0);
+      expect(provider.transactions.length, 1);
     });
   });
 }

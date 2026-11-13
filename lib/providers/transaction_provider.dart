@@ -54,10 +54,10 @@ class TransactionProvider extends ChangeNotifier {
     notifyListeners();
 
     final saved = await _storageService.loadTransactions();
-    if (saved != null && saved.isNotEmpty) {
+    if (saved != null) {
       _transactions = saved;
     } else {
-      _transactions = DemoData.getSampleTransactions();
+      _transactions = []; // Starts with NO entries
       await _storageService.saveTransactions(_transactions);
     }
 
@@ -220,12 +220,6 @@ class TransactionProvider extends ChangeNotifier {
             monthlyExp += tx.amount;
           }
         }
-      }
-
-      // If month in past had no data, provide sensible synthetic reference for realistic charts
-      if (monthlyInc == 0 && monthlyExp == 0 && i > 0) {
-        monthlyInc = (4200.0 + (i * 250)) % 6000;
-        monthlyExp = (2100.0 + (i * 180)) % 3800;
       }
 
       result.add(MonthlyFinanceData(

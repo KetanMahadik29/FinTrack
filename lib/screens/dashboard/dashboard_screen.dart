@@ -308,6 +308,8 @@ class DashboardScreen extends StatelessWidget {
   ) {
     final width = MediaQuery.of(context).size.width;
 
+    final isEmpty = txProvider.transactions.isEmpty;
+
     final cards = [
       SummaryMetricCard(
         title: 'Total Balance',
@@ -315,7 +317,7 @@ class DashboardScreen extends StatelessWidget {
         icon: Icons.account_balance_rounded,
         iconColor: AppColors.primary,
         iconBgColor: AppColors.primary.withOpacity(0.12),
-        trendText: '+8.4%',
+        trendText: isEmpty ? null : (txProvider.totalBalance >= 0 ? '+0.0%' : '-0.0%'),
         isPositiveTrend: txProvider.totalBalance >= 0,
       ),
       SummaryMetricCard(
@@ -324,7 +326,7 @@ class DashboardScreen extends StatelessWidget {
         icon: Icons.trending_up_rounded,
         iconColor: AppColors.success,
         iconBgColor: AppColors.success.withOpacity(0.12),
-        trendText: '+12.1%',
+        trendText: isEmpty ? null : '+0.0%',
         isPositiveTrend: true,
       ),
       SummaryMetricCard(
@@ -333,7 +335,7 @@ class DashboardScreen extends StatelessWidget {
         icon: Icons.trending_down_rounded,
         iconColor: AppColors.error,
         iconBgColor: AppColors.error.withOpacity(0.12),
-        trendText: '-3.2%',
+        trendText: isEmpty ? null : '-0.0%',
         isPositiveTrend: false,
       ),
       SummaryMetricCard(
@@ -342,7 +344,7 @@ class DashboardScreen extends StatelessWidget {
         icon: Icons.savings_outlined,
         iconColor: const Color(0xFF8B5CF6),
         iconBgColor: const Color(0xFF8B5CF6).withOpacity(0.12),
-        trendText: '${txProvider.savingsRate.toStringAsFixed(1)}% rate',
+        trendText: isEmpty ? null : '${txProvider.savingsRate.toStringAsFixed(1)}% rate',
         isPositiveTrend: true,
       ),
     ];

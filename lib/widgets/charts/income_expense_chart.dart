@@ -23,6 +23,38 @@ class IncomeExpenseChart extends StatelessWidget {
       return const Center(child: Text('No transaction history available'));
     }
 
+    final hasData = monthlyData.any((m) => m.income > 0 || m.expense > 0);
+    if (!hasData) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.bar_chart_rounded,
+              size: 44,
+              color: isDark ? AppColors.darkTextMuted : AppColors.textLight,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'No cash flow data yet',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: isDark ? AppColors.darkText : AppColors.text,
+              ),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              'Add transactions to visualize income vs expense comparison',
+              style: TextStyle(
+                fontSize: 12,
+                color: isDark ? AppColors.darkTextMuted : AppColors.textLight,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     double maxY = 0;
     for (final m in monthlyData) {
       if (m.income > maxY) maxY = m.income;

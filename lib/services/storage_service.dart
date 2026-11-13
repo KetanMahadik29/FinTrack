@@ -4,9 +4,9 @@ import '../models/transaction_model.dart';
 import '../models/user_model.dart';
 
 class StorageService {
-  static const String _keyTransactions = 'fintrack_transactions_v1';
-  static const String _keyUser = 'fintrack_user_v1';
-  static const String _keyAuthStatus = 'fintrack_is_logged_in_v1';
+  static const String _keyTransactions = 'fintrack_transactions_v2';
+  static const String _keyUser = 'fintrack_user_v2';
+  static const String _keyAuthStatus = 'fintrack_is_logged_in_v2';
 
   Future<void> saveTransactions(List<TransactionItem> items) async {
     final prefs = await SharedPreferences.getInstance();
@@ -49,6 +49,13 @@ class StorageService {
 
   Future<bool> getAuthStatus() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyAuthStatus) ?? true; // Default to true for demo UX
+    return prefs.getBool(_keyAuthStatus) ?? false; // Always default to false so Login screen is shown first!
+  }
+
+  Future<void> clearAll() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_keyTransactions);
+    await prefs.remove(_keyUser);
+    await prefs.remove(_keyAuthStatus);
   }
 }

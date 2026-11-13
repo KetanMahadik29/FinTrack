@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import '../data/demo_data.dart';
 import '../models/user_model.dart';
 import '../services/storage_service.dart';
 
 class AuthProvider extends ChangeNotifier {
   final StorageService _storageService = StorageService();
 
-  UserModel _user = DemoData.defaultUser;
-  bool _isAuthenticated = true; // Initialized to true for instant demo preview, can be toggled
+  UserModel _user = UserModel(
+    id: 'user_1',
+    name: 'Alex Johnson',
+    email: 'alex@fintrack.io',
+    currencyCode: 'USD',
+    currencySymbol: '\$',
+  );
+  bool _isAuthenticated = false; // Starts false so the user lands on the Login screen first
   bool _isLoading = false;
 
   UserModel get user => _user;
@@ -34,10 +39,6 @@ class AuthProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
 
-    // Simulate network authentication delay for realism
-    await Future.delayed(const Duration(milliseconds: 600));
-
-    // Demo authentication accepting any reasonable format or matching demo account
     _user = _user.copyWith(email: email);
     _isAuthenticated = true;
     _isLoading = false;
@@ -51,8 +52,6 @@ class AuthProvider extends ChangeNotifier {
   Future<bool> register(String name, String email, String password) async {
     _isLoading = true;
     notifyListeners();
-
-    await Future.delayed(const Duration(milliseconds: 600));
 
     _user = _user.copyWith(name: name, email: email);
     _isAuthenticated = true;

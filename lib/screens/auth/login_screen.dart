@@ -16,8 +16,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text: 'alex.fintrack@demo.io');
-  final _passwordController = TextEditingController(text: 'password123');
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
   @override
@@ -191,35 +191,27 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Demo Instant Login Badge
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.08),
-                          borderRadius: BorderRadius.circular(AppDimensions.radiusMd),
-                        ),
-                        child: Row(
-                          children: [
-                            const Icon(Icons.info_outline_rounded, size: 16, color: AppColors.primary),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                'Demo Credentials prefilled. Click Sign In to continue.',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  fontWeight: FontWeight.w500,
-                                  color: isDark ? AppColors.darkText : AppColors.text,
-                                ),
-                              ),
-                            ),
-                          ],
+                      // Quick Demo Sign-In
+                      OutlinedButton.icon(
+                        onPressed: auth.isLoading
+                            ? null
+                            : () {
+                                _emailController.text = 'demo@fintrack.io';
+                                _passwordController.text = 'demo1234';
+                                _handleLogin();
+                              },
+                        icon: const Icon(Icons.flash_on_rounded, size: 18, color: AppColors.primary),
+                        label: const Text('Quick Demo Sign-In'),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
                       ),
                       const SizedBox(height: 20),
 
                       // Switch to Register
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
                             "Don't have an account? ",
