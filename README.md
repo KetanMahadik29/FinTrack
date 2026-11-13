@@ -4,6 +4,18 @@ FinTrack is a modern, responsive personal finance web application built using **
 
 ---
 
+## 📸 Screenshots
+
+### Executive Financial Dashboard
+![FinTrack Dashboard](screenshots/dashboard_screen.png)
+
+### Modern Authentication Screen
+<p align="center">
+  <img src="screenshots/login_screen.png" alt="FinTrack Login Screen" width="520"/>
+</p>
+
+---
+
 ## 🚀 Key Features
 
 ### 1. 🔐 Authentication
@@ -66,6 +78,9 @@ FinTrack/
 ├── context.md                       # Comprehensive project context & guidelines
 ├── README.md                        # Documentation and run instructions
 ├── pubspec.yaml                     # Dependencies and project metadata
+├── screenshots/                     # UI screenshots
+│   ├── dashboard_screen.png
+│   └── login_screen.png
 ├── web/
 │   ├── index.html                   # HTML entry point with metadata
 │   └── manifest.json
@@ -114,7 +129,7 @@ FinTrack/
 │   │       ├── app_topbar.dart      # Header with date, theme toggle & actions
 │   │       └── main_scaffold.dart   # Responsive shell orchestrator
 │   └── data/
-│       └── demo_data.dart           # Rich initial dataset for demonstration
+│       └── demo_data.dart           # Initial sample dataset
 └── test/
     ├── widget_test.dart             # Desktop smoke test
     └── fintrack_unit_and_widget_test.dart # Responsive mobile & provider unit tests
